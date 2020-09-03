@@ -1,0 +1,35 @@
+{
+    "name": "mabrouk/mediable",
+    "description": "a laravel package to handle dealing with storing, updating or deleteing files",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ahmed Mabrouk",
+            "email": "a.mabrouk25@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "require-dev": {
+        "orchestra/testbench": "^7.0@dev"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Mabrouk\\Mediable\\MediableServiceProvider"
+            ]
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Mabrouk\\Mediable\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    }
+}
