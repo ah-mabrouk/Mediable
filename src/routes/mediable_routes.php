@@ -1,5 +1,6 @@
 <?php
 
-use Mabrouk\Mediablel\Http\Controllers\MediaController as MediableController;
-
-Route::apiResource('media', MediableController::class, ['only', ['update', 'destroy']]);
+Route::group(['namespace' => 'Mabrouk\Mediablel\Http\Controllers'], function()
+{
+    Route::apiResource('media', MediaController::class, ['only', ['update', 'destroy']]);
+});
