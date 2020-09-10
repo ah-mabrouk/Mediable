@@ -62,6 +62,7 @@ class MediableServiceProvider extends ServiceProvider
     protected function routeConfiguration()
     {
         return [
+            'namespace' => 'Mabrouk\Mediable\Http\Controllers',
             'prefix' => config('mediable.prefix'),
             'middleware' => config('mediable.middleware'),
         ];

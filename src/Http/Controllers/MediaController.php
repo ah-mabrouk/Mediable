@@ -1,6 +1,6 @@
 <?php
 
-namespace Mabrouk\Mediablel\Http\Controllers;
+namespace Mabrouk\Mediable\Http\Controllers;
 
 use Mabrouk\Mediable\Models\Media;
 use Mabrouk\Mediablel\Http\Resources\MediaResource;
