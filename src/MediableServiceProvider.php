@@ -40,7 +40,7 @@ class MediableServiceProvider extends ServiceProvider
             }
 
             if (\count($migrationFiles) > 0) {
-                $this->publishes($migrationFiles, 'migrations');
+                $this->publishes($migrationFiles, 'mediable_migrations');
             }
 
             /**
@@ -48,7 +48,7 @@ class MediableServiceProvider extends ServiceProvider
              */
             $this->publishes([
                 __DIR__ . '/config/mediable.php' => config_path('mediable.php'),
-            ], 'config');
+            ], 'mediable_config');
         }
     }
 
