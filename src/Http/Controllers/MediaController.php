@@ -3,15 +3,15 @@
 namespace Mabrouk\Mediable\Http\Controllers;
 
 use Mabrouk\Mediable\Models\Media;
-use Mabrouk\Mediablel\Http\Resources\MediaResource;
-use Mabrouk\Mediablel\Http\Requests\MediaUpdateRequest;
+use Mabrouk\Mediable\Http\Resources\MediaResource;
+use Mabrouk\Mediable\Http\Requests\MediaUpdateRequest;
 
 class MediaController extends Controller
 {
     /**
      * Update the specified resource in storage.
      *
-     * @param  Mabrouk\Mediablel\Http\Requests\MediaUpdateRequest  $request
+     * @param  Mabrouk\Mediable\Http\Requests\MediaUpdateRequest  $request
      * @param  Mabrouk\Mediable\Models\Media  $medium
      * @return \Illuminate\Http\Response
      */

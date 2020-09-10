@@ -1,6 +1,6 @@
 <?php
 
-namespace Mabrouk\Mediablel\Http\Requests;
+namespace Mabrouk\Mediable\Http\Requests;
 
 use Illuminate\Support\Str;
 use Illuminate\Foundation\Http\FormRequest;
