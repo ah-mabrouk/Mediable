@@ -24,7 +24,7 @@ class MediableServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        require_once __DIR__ . 'Helpers/MediableHelperFunctions.php';
+        require_once __DIR__ . '/Helpers/MediableHelperFunctions.php';
 
         $this->registerRoutes();
 
@@ -36,7 +36,7 @@ class MediableServiceProvider extends ServiceProvider
 
             switch (true) {
                 case ! class_exists('CreateMediaTable') :
-                    $migrationFiles[__DIR__ . 'database/migrations/create_media_table.php.stub'] = database_path('migrations/' . date('Y_m_d_His', time()) . '_create_media_table.php');
+                    $migrationFiles[__DIR__ . '/database/migrations/create_media_table.php.stub'] = database_path('migrations/' . date('Y_m_d_His', time()) . '_create_media_table.php');
             }
 
             if (\count($migrationFiles) > 0) {
@@ -47,14 +47,14 @@ class MediableServiceProvider extends ServiceProvider
              * Mediable Config
              */
             $this->publishes([
-                __DIR__.'config/mediable.php' => config_path('mediable.php'),
+                __DIR__ . '/config/mediable.php' => config_path('mediable.php'),
             ], 'config');
 
             /**
              * Mediable Config
              */
             $this->publishes([
-                __DIR__.'config/mediable.php' => config_path('mediable.php'),
+                __DIR__ . '/config/mediable.php' => config_path('mediable.php'),
             ], 'config');
         }
     }
@@ -62,7 +62,7 @@ class MediableServiceProvider extends ServiceProvider
     protected function registerRoutes()
     {
         Route::group($this->routeConfiguration(), function () {
-            $this->loadRoutesFrom(__DIR__ . 'routes/mediable_routes.php');
+            $this->loadRoutesFrom(__DIR__ . '/routes/mediable_routes.php');
         });
     }
 
