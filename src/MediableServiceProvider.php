@@ -14,7 +14,7 @@ class MediableServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->make('Mabrouk\Mediable\TodolistController');
+        $this->app->make('Mabrouk\Mediablel\Http\Controllers\MediaController');
     }
 
     /**
