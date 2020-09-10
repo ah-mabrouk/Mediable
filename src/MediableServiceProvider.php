@@ -37,11 +37,12 @@ class MediableServiceProvider extends ServiceProvider
              * Mediable Migrations
              */
             $migrationFiles = [];
+
             switch (true) {
                 case ! class_exists('CreateMediaTable') :
                     $migrationFiles[__DIR__ . 'database/migrations/create_media_table.php.stub'] = database_path('migrations/' . date('Y_m_d_His', time()) . '_create_media_table.php');
-                continue;
             }
+
             if (\count($migrationFiles) > 0) {
                 $this->publishes($migrationFiles, 'migrations');
             }
