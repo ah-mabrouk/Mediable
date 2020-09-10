@@ -28,7 +28,7 @@ class MediableServiceProvider extends ServiceProvider
 
         $this->registerRoutes();
 
-        // if ($this->app->runningInConsole()) {
+        if ($this->app->runningInConsole()) {
             /**
              * Mediable Migrations
              */
@@ -49,7 +49,7 @@ class MediableServiceProvider extends ServiceProvider
             $this->publishes([
                 __DIR__ . '/config/mediable.php' => config_path('mediable.php'),
             ], 'config');
-        // }
+        }
     }
 
     protected function registerRoutes()
