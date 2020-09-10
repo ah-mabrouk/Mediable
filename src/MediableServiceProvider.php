@@ -28,9 +28,9 @@ class MediableServiceProvider extends ServiceProvider
 
         $this->registerRoutes();
 
-        $this->publishes([
-            __DIR__.'/views' => base_path('resources/views/wisdmlabs/todolist'),
-        ]);
+        // $this->publishes([
+        //     __DIR__.'/views' => base_path('resources/views/mabrouk/mediable'),
+        // ]);
 
         if ($this->app->runningInConsole()) {
             /**
