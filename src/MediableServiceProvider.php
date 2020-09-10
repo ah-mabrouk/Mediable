@@ -14,7 +14,7 @@ class MediableServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->make('Http\Controllers\MediaController');
+        //
     }
 
     /**
@@ -27,10 +27,6 @@ class MediableServiceProvider extends ServiceProvider
         require_once __DIR__ . 'Helpers/MediableHelperFunctions.php';
 
         $this->registerRoutes();
-
-        // $this->publishes([
-        //     __DIR__.'/views' => base_path('resources/views/mabrouk/mediable'),
-        // ]);
 
         if ($this->app->runningInConsole()) {
             /**
