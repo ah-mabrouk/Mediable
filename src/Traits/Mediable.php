@@ -26,6 +26,7 @@ Trait Mediable
                         'path',
                         'title',
                         'description',
+                        'priority',
                         'is_main'
                     ]);
     }
@@ -44,6 +45,7 @@ Trait Mediable
                         'path',
                         'title',
                         'description',
+                        'priority',
                         'is_main'
                     ]);
     }

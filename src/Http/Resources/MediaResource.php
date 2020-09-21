@@ -20,6 +20,7 @@ class MediaResource extends JsonResource
             'path' => $this->type != 'video' ? url($this->path) : $this->path,
             'title' => $this->title,
             'description' => $this->description,
+            'priority' => $this->priority,
             'main' => $this->is_main,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
