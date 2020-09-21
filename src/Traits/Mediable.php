@@ -12,6 +12,7 @@ Trait Mediable
 	public function media($type = null, $title = null)
     {
         return $this->morphMany(Media::class, 'mediable')
+                    ->orderBy('priority', 'asc')
                     ->when($type, function ($query) use ($type) {
                         $query->where('type', $type);
                     })
@@ -45,7 +46,6 @@ Trait Mediable
                         'path',
                         'title',
                         'description',
-                        'priority',
                         'is_main'
                     ]);
     }
