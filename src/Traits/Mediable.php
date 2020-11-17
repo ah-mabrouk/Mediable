@@ -50,22 +50,25 @@ Trait Mediable
                     ]);
     }
 
-    public function getPhotosDirectoryAttribute($value)
+    public function getMediaDirectoryAttribute($value)
     {
         $className = new ReflectionClass($this);
         return Str::plural(strtolower($className->getShortName()));
+    }
+
+    public function getPhotosDirectoryAttribute($value)
+    {
+        config('mediable.photos') . "/{$this->mediaDirectory}";
     }
 
     public function getFilesDirectoryAttribute($value)
     {
-        $className = new ReflectionClass($this);
-        return Str::plural(strtolower($className->getShortName()));
+        config('mediable.files') . "/{$this->mediaDirectory}";
     }
 
     public function getVideosDirectoryAttribute($value)
     {
-        $className = new ReflectionClass($this);
-        return Str::plural(strtolower($className->getShortName()));
+        config('mediable.videos') . "/{$this->mediaDirectory}";
     }
 
     public function addMedia($type, $path, $title = null, $description = null, $isMain = false)
