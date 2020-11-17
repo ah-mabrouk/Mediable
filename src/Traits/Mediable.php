@@ -58,17 +58,17 @@ Trait Mediable
 
     public function getPhotosDirectoryAttribute($value)
     {
-        config('mediable.photos.path') . "/{$this->mediaDirectory}";
+        return config('mediable.photos.path') . "{$this->mediaDirectory}";
     }
 
     public function getFilesDirectoryAttribute($value)
     {
-        config('mediable.files.path') . "/{$this->mediaDirectory}";
+        return config('mediable.files.path') . "{$this->mediaDirectory}";
     }
 
     public function getVideosDirectoryAttribute($value)
     {
-        config('mediable.videos.path') . "/{$this->mediaDirectory}";
+        return config('mediable.videos.path') . "{$this->mediaDirectory}";
     }
 
     public function addMedia($type, $path, $title = null, $description = null, $isMain = false)
