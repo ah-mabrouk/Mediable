@@ -140,7 +140,7 @@ Trait Mediable
     public function getMainMediaAttribute()
     {
         $main = $this->media()->where('is_main', true)->first();
-        return $main ? $main : $this->media->first();
+        return $main ? $main : $this->media()->first();
     }
 
     public function getIsMainMediaAttribute()
