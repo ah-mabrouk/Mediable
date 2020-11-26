@@ -1,16 +1,18 @@
 <?php
 
 return [
+    'base_path' => 'public/',
+
     'photos' => [
-        'path' => env('APP_PHOTOS_PATH', 'public/photos/'),
+        'path' => env('APP_PHOTOS_PATH', 'photos/'),
     ],
 
     'files' => [
-        'path' => env('APP_FILES_PATH', 'public/files/'),
+        'path' => env('APP_FILES_PATH', 'files/'),
     ],
 
     'videos' => [
-        'path' => env('APP_VIDEOS_PATH', 'public/videos/'),
+        'path' => env('APP_VIDEOS_PATH', 'videos/'),
     ],
 
     'prefix' => '',
