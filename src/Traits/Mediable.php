@@ -168,6 +168,16 @@ Trait Mediable
         return $this->media('file')->first();
     }
 
+    public function getVoicesAttribute()
+    {
+        return $this->media('voice')->get();
+    }
+
+    public function getVoiceAttribute()
+    {
+        return $this->media('voice')->first();
+    }
+
     public function getVideosAttribute()
     {
         return $this->media('video')->get();
@@ -176,6 +186,16 @@ Trait Mediable
     public function getVideoAttribute()
     {
         return $this->media('video')->first();
+    }
+
+    public function getUrlsAttribute()
+    {
+        return $this->media('url')->get();
+    }
+
+    public function getUrlAttribute()
+    {
+        return $this->media('url')->first();
     }
 
     protected function getVideoIdAttribute($value)
