@@ -15,7 +15,7 @@ return [
         'path' => env('APP_VIDEOS_PATH', 'videos/'),
     ],
 
-    'prefix' => '',
+    'prefix' => 'api',
 
     'middleware' => [
         //
