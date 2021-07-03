@@ -5,6 +5,7 @@ namespace Mabrouk\Mediable\Http\Controllers;
 use Mabrouk\Mediable\Models\Media;
 use Mabrouk\Mediable\Http\Resources\MediaResource;
 use Mabrouk\Mediable\Http\Requests\MediaUpdateRequest;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class MediaController extends Controller
 {
@@ -33,6 +34,9 @@ class MediaController extends Controller
     public function destroy(Media $medium)
     {
         $medium = \gettype($medium) == 'object' ? $medium : Media::findOrFail($medium);
+        if (! $medium->mediable) {
+            throw new ModelNotFoundException;
+        }
         if ((bool) $medium->is_main) {
             return response([
                 'message' => __('You can\'t delete a main media file'),
