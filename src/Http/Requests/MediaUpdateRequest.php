@@ -3,6 +3,7 @@
 namespace Mabrouk\Mediable\Http\Requests;
 
 use Illuminate\Support\Str;
+use Mabrouk\Mediable\Models\Media;
 use Illuminate\Foundation\Http\FormRequest;
 
 class MediaUpdateRequest extends FormRequest
@@ -24,7 +25,7 @@ class MediaUpdateRequest extends FormRequest
      */
     public function rules()
     {
-        $this->type = $this->medium->type;
+        $this->type = \gettype($this->medium) == 'object' ? $this->medium->type : Media::findOrFail($this->medium)->type;
         $this->model = $this->medium->mediable;
 
         switch ($this->type) {
