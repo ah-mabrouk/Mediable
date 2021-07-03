@@ -17,16 +17,11 @@ class MediaController extends Controller
      */
     public function update(MediaUpdateRequest $request, Media $medium)
     {
-        if ($request->updateMadia()) {
-            return response([
-                'message' => __('One media file updated successfully'),
-                'media' => new MediaResource($medium->refresh()),
-            ]);
-        }
-
+        $medium = $request->updateMadia();
         return response([
-            'message' => __('Something went wrong'),
-        ], 403);
+            'message' => __('One media file updated successfully'),
+            'media' => new MediaResource($medium->refresh()),
+        ]);
     }
 
     /**

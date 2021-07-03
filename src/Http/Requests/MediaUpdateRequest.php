@@ -25,7 +25,8 @@ class MediaUpdateRequest extends FormRequest
      */
     public function rules()
     {
-        $this->type = \gettype($this->medium) == 'object' ? $this->medium->type : Media::findOrFail($this->medium)->type;
+        $this->medium = \gettype($this->medium) == 'object' ? $this->medium : Media::findOrFail($this->medium);
+        $this->type = $this->medium->type;
         $this->model = $this->medium->mediable;
 
         switch ($this->type) {
@@ -49,26 +50,20 @@ class MediaUpdateRequest extends FormRequest
         $mediaDirectory = Str::plural($this->type) . 'Directory';
         $fileName = $this->model->name != null ? Str::slug($this->model->name) : $this->model->slug;
 
-        if ($this->type != 'video') {
-            $this->model->editMedia(
-                $this->medium,
-                $this->file->storeAs(
-                    config($configPath) . $this->model->$mediaDirectory,
-                    $fileName . '-' . random_int(1, 9999999) . '.' . $this->file->getClientOriginalExtension()
-                )
-            );
-            return true;
+        switch (true) {
+            case $this->type == 'video' :
+                $this->model->editMedia($this->medium, $this->file);
+                break;
+            case $this->type != 'video' :
+                $this->model->editMedia(
+                    $this->medium,
+                    $this->file->storeAs(
+                        config($configPath) . $this->model->$mediaDirectory,
+                        $fileName . '-' . random_int(1, 9999999) . '.' . $this->file->getClientOriginalExtension()
+                    )
+                );
+                break;
         }
-
-        if ($this->type != 'video') {
-            $this->model->editMedia(
-                $this->medium,
-                $this->file->storeAs(
-                    config($configPath) . $this->model->$mediaDirectory,
-                    $fileName . '-' . randomBy() . '.' . $this->file->getClientOriginalExtension()
-                )
-            );
-            return true;
-        }
+        return $this->medium->refresh();
     }
 }
