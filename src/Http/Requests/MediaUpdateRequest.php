@@ -5,6 +5,7 @@ namespace Mabrouk\Mediable\Http\Requests;
 use Illuminate\Support\Str;
 use Mabrouk\Mediable\Models\Media;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class MediaUpdateRequest extends FormRequest
 {
@@ -28,6 +29,9 @@ class MediaUpdateRequest extends FormRequest
         $this->medium = \gettype($this->medium) == 'object' ? $this->medium : Media::findOrFail($this->medium);
         $this->type = $this->medium->type;
         $this->model = $this->medium->mediable;
+        if (! $this->medium->mediable) {
+            throw new ModelNotFoundException;
+        }
 
         switch ($this->type) {
             case 'photo' :

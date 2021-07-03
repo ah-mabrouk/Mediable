@@ -12,7 +12,7 @@ class Media extends Model
         'type',         // photo, video or file
         'title',        // nullable
         'description',  // nullable
-        'priority', // default 0
+        'priority',     // default 0
         'is_main'
     ];
 
