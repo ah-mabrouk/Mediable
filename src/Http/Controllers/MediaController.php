@@ -32,6 +32,7 @@ class MediaController extends Controller
      */
     public function destroy(Media $medium)
     {
+        $medium = \gettype($medium) == 'object' ? $medium : Media::findOrFail($medium);
         if ((bool) $medium->is_main) {
             return response([
                 'message' => __('You can\'t delete a main media file'),
