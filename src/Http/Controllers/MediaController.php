@@ -31,9 +31,9 @@ class MediaController extends Controller
      * @param  Mabrouk\Mediable\Models\Media  $medium
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Media $medium)
+    public function destroy($medium)
     {
-        $medium = \gettype($medium) == 'object' ? $medium : Media::findOrFail($medium);
+        $medium = Media::findOrFail($medium);
         if (! $medium->mediable) {
             optional($medium)->deleteMedia();
             throw new ModelNotFoundException;
