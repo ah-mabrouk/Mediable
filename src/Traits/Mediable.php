@@ -171,7 +171,7 @@ Trait Mediable
             'description' => $description ?? $singleMedia->description,
             'is_main' => $isMain
         ]);
-        ! $oldPath ?: $this->deleteOldMediaPath($oldPath);
+        ! $oldPath ?: $singleMedia->remove(true);
         $this->touch;
     }
 

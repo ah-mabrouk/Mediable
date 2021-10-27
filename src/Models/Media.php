@@ -60,9 +60,10 @@ class Media extends Model
 
     ## Other Methods
 
-    public function remove()
+    public function remove($removeFileWithoutObject = false)
     {
         Storage::delete($this->storagePath);
+        if ($removeFileWithoutObject) return $this;
         $this->delete();
         return $this;
     }
