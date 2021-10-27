@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Storage;
 
 Trait Mediable
 {
+    ## Relations
+
 	public function media($type = null, $title = null)
     {
         return $this->morphMany(Media::class, 'mediable')
@@ -50,6 +52,8 @@ Trait Mediable
                     ]);
     }
 
+    ## Getters & Setters
+
     public function getMediaDirectoryAttribute($value)
     {
         $className = new ReflectionClass($this);
@@ -69,72 +73,6 @@ Trait Mediable
     public function getVideosDirectoryAttribute($value)
     {
         return config('mediable.base_path') . config('mediable.videos.path') . "{$this->mediaDirectory}";
-    }
-
-    public function addMedia($type, $path, $title = null, $description = null, $isMain = false)
-    {
-        ! $isMain ? : $this->normalizePreviousMainMedia();
-
-        $this->media()->create([
-            'path' => $path,
-            'type' => $type,
-            'title' => $title,
-            'description' => $description,
-            'is_main' => $isMain ? true : false
-        ]);
-        $this->touch;
-        return $this;
-    }
-
-    public function editMedia(Media $singleMedia, $path = null, $title = null, $description = null, $isMain = false)
-    {
-        $oldPath = $path == null ?: $singleMedia->path;
-        $singleMedia->is_main || (!$singleMedia->is_main && !$isMain) ? : $this->normalizePreviousMainMedia();
-
-        $singleMedia->update([
-            'path' => $path ?? $singleMedia->path,
-            'title' => $title ?? $singleMedia->title,
-            'description' => $description ?? $singleMedia->description,
-            'is_main' => $isMain
-        ]);
-        ! $oldPath ?: $this->deleteOldMediaPath($oldPath);
-        $this->touch;
-    }
-
-    public function replaceMedia(Media $singleMedia, $path, $title = null, $description = null, $isMain = false)
-    {
-        $this->editMedia($singleMedia, $path, $title, $description, $isMain);
-        $this->touch;
-    }
-
-    public function deleteMedia(Media $singleMedia)
-    {
-        $singleMedia->delete();
-        $this->deleteOldMediaPath($singleMedia->path);
-        $this->touch;
-    }
-
-    public function deleteAllMedia()
-    {
-        $this->media->each(function ($singleMedia) {
-            $this->deleteMedia($singleMedia);
-        });
-        $this->touch;
-    }
-
-    protected function deleteOldMediaPath($path)
-    {
-        Storage::delete($path);
-    }
-
-    protected function normalizePreviousMainMedia()
-    {
-        if ((bool) optional($this->mainMedia)->is_main) {
-            $this->mainMedia->update([
-                'is_main' => false
-            ]);
-        }
-        return;
     }
 
     public function getMainMediaAttribute()
@@ -201,5 +139,68 @@ Trait Mediable
     protected function getVideoIdAttribute($value)
     {
         return getYoutubeVideoId($this->path);
+    }
+
+    ## Query Scope Methods
+
+    ## Other Methods
+
+    public function addMedia($type, $path, $title = null, $description = null, $isMain = false)
+    {
+        ! $isMain ? : $this->normalizePreviousMainMedia();
+
+        $this->media()->create([
+            'path' => $path,
+            'type' => $type,
+            'title' => $title,
+            'description' => $description,
+            'is_main' => $isMain ? true : false
+        ]);
+        $this->touch;
+        return $this;
+    }
+
+    public function editMedia(Media $singleMedia, $path = null, $title = null, $description = null, $isMain = false)
+    {
+        $oldPath = $path == null ?: $singleMedia->path;
+        $singleMedia->is_main || (!$singleMedia->is_main && !$isMain) ? : $this->normalizePreviousMainMedia();
+
+        $singleMedia->update([
+            'path' => $path ?? $singleMedia->path,
+            'title' => $title ?? $singleMedia->title,
+            'description' => $description ?? $singleMedia->description,
+            'is_main' => $isMain
+        ]);
+        ! $oldPath ?: $this->deleteOldMediaPath($oldPath);
+        $this->touch;
+    }
+
+    public function replaceMedia(Media $singleMedia, $path, $title = null, $description = null, $isMain = false)
+    {
+        $this->editMedia($singleMedia, $path, $title, $description, $isMain);
+        $this->touch;
+    }
+
+    public function deleteMedia(Media $singleMedia)
+    {
+        $singleMedia->remove();
+        $this->touch;
+    }
+
+    public function deleteAllMedia()
+    {
+        $this->media->each(function ($singleMedia) {
+            $this->deleteMedia($singleMedia);
+        });
+    }
+
+    protected function normalizePreviousMainMedia()
+    {
+        if ((bool) optional($this->mainMedia)->is_main) {
+            $this->mainMedia->update([
+                'is_main' => false
+            ]);
+        }
+        return;
     }
 }

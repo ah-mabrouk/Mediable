@@ -20,15 +20,14 @@ class Media extends Model
         'is_main' => 'boolean'
     ];
 
+    ## Relations
+
     public function mediable()
     {
         return $this->morphTo();
     }
 
-    public function scopeMain($query, $type)
-    {
-        return $query->where('is_main', 1)->where('type', $type);
-    }
+    ## Getters & Setters
 
     protected function getPathAttribute($value)
     {
@@ -45,15 +44,26 @@ class Media extends Model
         return getYoutubeVideoId($this->path);
     }
 
-    public function deleteMedia()
+    public function getStoragePathAttribute()
     {
-        $this->deleteOldMediaPath()->delete();
-        return $this;
+        $fileNamePathParts = \explode('/', $this->path);
+        $fileName = $fileNamePathParts[(\count($fileNamePathParts) - 1)];
+        return "/{$this->mediable->photosDirectory}/{$fileName}";
     }
 
-    private function deleteOldMediaPath()
+    ## Query Scope Methods
+
+    public function scopeMain($query, $type = 'photo')
     {
-        Storage::delete($this->path);
+        return $query->where('is_main', 1)->where('type', $type);
+    }
+
+    ## Other Methods
+
+    public function remove()
+    {
+        Storage::delete($this->storagePath);
+        $this->delete();
         return $this;
     }
 }
