@@ -165,13 +165,14 @@ Trait Mediable
         $oldPath = $path == null ?: $singleMedia->path;
         $singleMedia->is_main || (!$singleMedia->is_main && !$isMain) ? : $this->normalizePreviousMainMedia();
 
+        ! $oldPath ?: $singleMedia->remove(true);
         $singleMedia->update([
             'path' => $path ?? $singleMedia->path,
             'title' => $title ?? $singleMedia->title,
             'description' => $description ?? $singleMedia->description,
             'is_main' => $isMain
         ]);
-        ! $oldPath ?: $singleMedia->remove(true);
+
         $this->touch;
     }
 
