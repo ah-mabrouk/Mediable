@@ -35,7 +35,7 @@ class MediaController extends Controller
     {
         $medium = Media::findOrFail($medium);
         if (! $medium->mediable) {
-            optional($medium)->deleteMedia();
+            optional($medium)->remove();
             throw new ModelNotFoundException;
         }
         if ((bool) $medium->is_main) {

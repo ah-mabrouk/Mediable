@@ -48,7 +48,7 @@ class Media extends Model
     {
         $fileNamePathParts = \explode('/', $this->path);
         $fileName = $fileNamePathParts[(\count($fileNamePathParts) - 1)];
-        return "/{$this->mediable->photosDirectory}/{$fileName}";
+        return "/{$this->mediable?->photosDirectory}/{$fileName}";
     }
 
     ## Query Scope Methods
