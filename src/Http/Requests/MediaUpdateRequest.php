@@ -56,15 +56,16 @@ class MediaUpdateRequest extends FormRequest
 
         switch (true) {
             case $this->type == 'video' :
-                $this->model->editMedia($this->medium, $this->file);
+                $this->model->editMedia(singleMedia: $this->medium, path: $this->file);
                 break;
             case $this->type != 'video' :
                 $this->model->editMedia(
-                    $this->medium,
-                    $this->file->storeAs(
+                    singleMedia: $this->medium,
+                    path: $this->file->storeAs(
                         config($configPath) . $this->model->$mediaDirectory,
                         $fileName . '-' . random_int(1, 9999999) . '.' . $this->file->getClientOriginalExtension()
-                    )
+                    ),
+                    fileSize: $this->file('file')->getSize() / 1024
                 );
                 break;
         }

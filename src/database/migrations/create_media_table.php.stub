@@ -21,6 +21,7 @@ class CreateMediaTable extends Migration
             $table->text('description')->nullable();
             $table->integer('priority')->unsigned()->default(0);
             $table->string('type')->index(); // photo or video or file
+            $table->unsignedInteger('size')->nullable(); // file size in kb
             $table->boolean('is_main')->default(false);
             $table->timestamps();
         });

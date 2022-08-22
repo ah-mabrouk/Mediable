@@ -10,6 +10,7 @@ class Media extends Model
     protected $fillable = [
         'path',
         'type',         // photo, video or file
+        'size',         // file size in kb
         'title',        // nullable
         'description',  // nullable
         'priority',     // default 0

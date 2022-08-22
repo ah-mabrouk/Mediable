@@ -15,5 +15,6 @@ $factory->define(Media::class, function (Faker $faker) {
         'title' => $faker->words(3),
         'description' => $faker->words(15),
         'is_main' => $faker->boolean(100),
+        'size' => $faker->random_int(256, 1024),
     ];
 });

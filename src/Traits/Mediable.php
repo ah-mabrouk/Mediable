@@ -30,7 +30,8 @@ Trait Mediable
                         'title',
                         'description',
                         'priority',
-                        'is_main'
+                        'is_main',
+                        'size',
                     ]);
     }
 
@@ -48,7 +49,8 @@ Trait Mediable
                         'path',
                         'title',
                         'description',
-                        'is_main'
+                        'is_main',
+                        'size',
                     ]);
     }
 
@@ -145,7 +147,7 @@ Trait Mediable
 
     ## Other Methods
 
-    public function addMedia($type, $path, $title = null, $description = null, $isMain = false)
+    public function addMedia(string $type, string $path, string $title = null, string $description = null, bool $isMain = false, int $fileSize = null)
     {
         ! $isMain ? : $this->normalizePreviousMainMedia();
 
@@ -154,13 +156,14 @@ Trait Mediable
             'type' => $type,
             'title' => $title,
             'description' => $description,
-            'is_main' => $isMain ? true : false
+            'is_main' => $isMain ? true : false,
+            'size' => $fileSize,
         ]);
         $this->touch;
         return $this;
     }
 
-    public function editMedia(Media $singleMedia, $path = null, $title = null, $description = null, $isMain = false)
+    public function editMedia(Media $singleMedia, string $path = null, string $title = null, string $description = null, bool $isMain = false, int $fileSize = null)
     {
         $oldPath = $path == null ?: $singleMedia->path;
         $singleMedia->is_main || (!$singleMedia->is_main && !$isMain) ? : $this->normalizePreviousMainMedia();
@@ -170,15 +173,16 @@ Trait Mediable
             'path' => $path ?? $singleMedia->path,
             'title' => $title ?? $singleMedia->title,
             'description' => $description ?? $singleMedia->description,
-            'is_main' => $isMain
+            'is_main' => $isMain,
+            'size' => $fileSize,
         ]);
 
         $this->touch;
     }
 
-    public function replaceMedia(Media $singleMedia, $path, $title = null, $description = null, $isMain = false)
+    public function replaceMedia(Media $singleMedia, string $path, string $title = null, string $description = null, bool $isMain = false, int $fileSize = null)
     {
-        $this->editMedia($singleMedia, $path, $title, $description, $isMain);
+        $this->editMedia($singleMedia, $path, $title, $description, $isMain, $fileSize);
         $this->touch;
     }
 
