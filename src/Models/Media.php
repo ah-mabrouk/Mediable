@@ -32,7 +32,7 @@ class Media extends Model
 
     protected function getPathAttribute($value)
     {
-        return str_replace('public', '/storage', $value);
+        return str_replace('public/', '/storage//', $value);
     }
 
     protected function getIsMainAttribute($value)
