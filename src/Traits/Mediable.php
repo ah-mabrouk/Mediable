@@ -147,7 +147,7 @@ Trait Mediable
 
     ## Other Methods
 
-    public function addMedia(string $type, string $path, string $title = null, string $description = null, bool $isMain = false, int $fileSize = null)
+    public function addMedia(string $type, string $path, string $title = null, string $description = null, bool $isMain = false, int $priority = 9999, int $fileSize = null)
     {
         ! $isMain ? : $this->normalizePreviousMainMedia();
 
@@ -157,13 +157,14 @@ Trait Mediable
             'title' => $title,
             'description' => $description,
             'is_main' => $isMain ? true : false,
+            'priority' => $priority,
             'size' => $fileSize,
         ]);
         $this->touch;
         return $this;
     }
 
-    public function editMedia(Media $singleMedia, string $path = null, string $title = null, string $description = null, bool $isMain = false, int $fileSize = null)
+    public function editMedia(Media $singleMedia, string $path = null, string $title = null, string $description = null, bool $isMain = false, int $priority = 9999, int $fileSize = null)
     {
         $oldPath = $path == null ?: $singleMedia->path;
         $singleMedia->is_main || (!$singleMedia->is_main && !$isMain) ? : $this->normalizePreviousMainMedia();
@@ -174,6 +175,7 @@ Trait Mediable
             'title' => $title ?? $singleMedia->title,
             'description' => $description ?? $singleMedia->description,
             'is_main' => $isMain,
+            'priority' => $priority != $singleMedia->priority && $priority != 9999 ? $priority : $singleMedia->priority,
             'size' => $fileSize,
         ]);
 
