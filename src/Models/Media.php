@@ -29,6 +29,11 @@ class Media extends Model
 
     ## Relations
 
+    public function mediable()
+    {
+        return $this->morphTo();
+    }
+
     ## Getters & Setters
 
     public function getStoragePathAttribute()
