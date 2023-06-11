@@ -9,9 +9,11 @@
             "email": "a.mabrouk25@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {
-        "laravel/framework": ">=8.0"
+        "laravel/framework": ">=8.0",
+        "mabrouk/translatable": "^1.0",
+        "mabrouk/filterable": "^1.0"
     },
     "require-dev": {
         "orchestra/testbench": "^7.0@dev"

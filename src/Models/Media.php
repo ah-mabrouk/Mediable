@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Storage;
 
 class Media extends Model
 {
+    protected $table = 'media';
+
     protected $fillable = [
         'path',
         'type',         // photo, video or file
@@ -14,49 +16,38 @@ class Media extends Model
         'title',        // nullable
         'description',  // nullable
         'priority',     // default 0
-        'is_main'
+        'is_main',
     ];
 
     protected $casts = [
-        'is_main' => 'boolean'
+        'is_main' => 'boolean',
     ];
 
     ## Relations
 
-    public function mediable()
-    {
-        return $this->morphTo();
-    }
-
     ## Getters & Setters
-
-    protected function getPathAttribute($value)
-    {
-        return str_replace('public/', '/storage//', $value);
-    }
-
-    protected function getIsMainAttribute($value)
-    {
-        return (bool) $value;
-    }
-
-    protected function getVideoIdAttribute($value)
-    {
-        return getYoutubeVideoId($this->path);
-    }
-
-    public function getStoragePathAttribute()
-    {
-        $fileNamePathParts = \explode('/', $this->path);
-        $fileName = $fileNamePathParts[(\count($fileNamePathParts) - 1)];
-        return "/{$this->mediable?->photosDirectory}/{$fileName}";
-    }
 
     ## Query Scope Methods
 
-    public function scopeMain($query, $type = 'photo')
+    public function scopeMain($query, bool $main = true)
     {
-        return $query->where('is_main', 1)->where('type', $type);
+        return $query->where('is_main', $main);
+    }
+
+    public function scopeOfType($query, string $type = '')
+    {
+        $availableTypes = [
+            'photo',
+            'file',
+            'video',
+        ];
+        $type = \in_array(\strtolower($type), $availableTypes) ? \strtolower($type) : '';
+        return $type == '' ? $query : $query->where('type', $type);
+    }
+
+    public function scopeWithTitle($query, string $title = '')
+    {
+        return $title == '' ? $query : $query->where('title', $title);
     }
 
     ## Other Methods

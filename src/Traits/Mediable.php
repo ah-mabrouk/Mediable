@@ -5,7 +5,6 @@ namespace Mabrouk\Mediable\Traits;
 use ReflectionClass;
 use Illuminate\Support\Str;
 use Mabrouk\Mediable\Models\Media;
-use Illuminate\Support\Facades\Storage;
 
 Trait Mediable
 {
@@ -23,15 +22,15 @@ Trait Mediable
                     })
                     ->select([
                         'id',
-                        'type',
                         'mediable_type',
                         'mediable_id',
+                        'type',
                         'path',
                         'title',
                         'description',
                         'priority',
-                        'is_main',
                         'size',
+                        'is_main',
                     ]);
     }
 
@@ -43,14 +42,14 @@ Trait Mediable
                     })
                     ->select([
                         'id',
-                        'type',
                         'mediable_type',
                         'mediable_id',
+                        'type',
                         'path',
                         'title',
                         'description',
-                        'is_main',
                         'size',
+                        'is_main',
                     ]);
     }
 
