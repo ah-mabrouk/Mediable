@@ -27,6 +27,13 @@ class Media extends Model
 
     ## Getters & Setters
 
+    public function getStoragePathAttribute()
+    {
+        $fileNamePathParts = \explode('/', $this->path);
+        $fileName = $fileNamePathParts[(\count($fileNamePathParts) - 1)];
+        return "/{$this->mediable?->photosDirectory}/{$fileName}";
+    }
+
     ## Query Scope Methods
 
     public function scopeMain($query, bool $main = true)
