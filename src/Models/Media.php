@@ -2,6 +2,7 @@
 
 namespace Mabrouk\Mediable\Models;
 
+use Database\Factories\MediaFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -69,7 +70,7 @@ class Media extends Model
      */
     protected static function newFactory()
     {
-        return \Mabrouk\Mediable\Database\Factories\MediaFactory::new();
+        return MediaFactory::new();
     }
 
     public function remove($removeFileWithoutObject = false)
