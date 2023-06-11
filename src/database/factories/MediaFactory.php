@@ -1,20 +1,29 @@
 <?php
 
-use Faker\Generator as Faker;
-use Mabrouk\Mediable\Models\Media;
-use Mabrouk\Mediable\Tests\Models\User;
+namespace Database\Factories;
 
-$factory->define(Media::class, function (Faker $faker) {
-    $mediable = factory(User::class)->create();
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-    return [
-        'mediable_type' => get_class($mediable),
-        'mediable_id' => $mediable->id,
-        'path' => imageUrl(640, 480),
-        'type' => 'photo',
-        'title' => $faker->words(3),
-        'description' => $faker->words(15),
-        'is_main' => $faker->boolean(100),
-        'size' => $faker->random_int(256, 1024),
-    ];
-});
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Tag>
+ */
+class MediaFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition()
+    {
+        return [
+            'path',
+            'type' => $this->faker->randomElement(['photo', 'file', 'video']),
+            'size' => $this->faker->numberBetween(50, 2048),
+            'title' => $this->faker->sentence(5),
+            'description' => $this->faker->paragraph(2),
+            'priority' => $this->faker->numberBetween(1, 9999),
+            'is_main' => false,
+        ];
+    }
+}
