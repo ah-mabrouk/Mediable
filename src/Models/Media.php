@@ -4,12 +4,9 @@ namespace Mabrouk\Mediable\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
-use Mabrouk\Mediable\Traits\MediaModelsTrait;
 
 class Media extends Model
 {
-    use MediaModelsTrait;
-
     protected $table = 'media';
 
     protected $fillable = [
@@ -29,13 +26,6 @@ class Media extends Model
     ## Relations
 
     ## Getters & Setters
-
-    public function getStoragePathAttribute()
-    {
-        $fileNamePathParts = \explode('/', $this->path);
-        $fileName = $fileNamePathParts[(\count($fileNamePathParts) - 1)];
-        return "/{$this->mediable?->photosDirectory}/{$fileName}";
-    }
 
     ## Query Scope Methods
 
