@@ -2,9 +2,9 @@
 
 namespace Mabrouk\Mediable\Models;
 
-use Database\Factories\MediaFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Mabrouk\Mediable\Factories\MediaFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Media extends Model

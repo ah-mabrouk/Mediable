@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Factories;
+namespace Mabrouk\Mediable\Factories;
 
 use Mabrouk\Mediable\Models\Media;
 use Illuminate\Database\Eloquent\Factories\Factory;
