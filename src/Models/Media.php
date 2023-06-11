@@ -4,9 +4,12 @@ namespace Mabrouk\Mediable\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Media extends Model
 {
+    use HasFactory;
+
     protected $table = 'media';
 
     protected $fillable = [
