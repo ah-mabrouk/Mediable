@@ -13,20 +13,14 @@ class CreateMediaTable extends Migration
      */
     public function up()
     {
-        Schema::create('media', function (Blueprint $table) {
+        Schema::create('translated_media_translations', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->morphs('mediable');
+            $table->unsignedBigInteger('translated_media_id');
 
-            $table->string('type')->index(); // photo, video, file, voice or url
-            $table->text('path');
-            // $table->string('media_group_name')->index()->nullable(); // ! will add later
+            $table->string('locale')->index();
+
             $table->string('title')->nullable();
             $table->text('description')->nullable();
-
-            $table->unsignedInteger('priority')->default(0);
-            $table->unsignedInteger('size')->nullable(); // file size in kb
-
-            $table->boolean('is_main')->default(false);
 
             $table->timestamps();
         });

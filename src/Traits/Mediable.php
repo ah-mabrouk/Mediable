@@ -13,44 +13,41 @@ Trait Mediable
 	public function media($type = null, $title = null)
     {
         return $this->morphMany(Media::class, 'mediable')
-                    ->orderBy('priority', 'asc')
-                    ->when($type, function ($query) use ($type) {
-                        $query->where('type', $type);
-                    })
-                    ->when($title, function ($query) use ($title) {
-                        $query->where('title', $title);
-                    })
-                    ->select([
-                        'id',
-                        'mediable_type',
-                        'mediable_id',
-                        'type',
-                        'path',
-                        'title',
-                        'description',
-                        'priority',
-                        'size',
-                        'is_main',
-                    ]);
+            ->orderBy('priority', 'asc')
+            ->when($type, function ($query) use ($type) {
+                $query->ofType($type);
+            })->when($title, function ($query) use ($title) {
+                $query->byTitle($title);
+            })->select([
+                'id',
+                'mediable_type',
+                'mediable_id',
+                'type',
+                'path',
+                'title',
+                'description',
+                'priority',
+                'size',
+                'is_main',
+            ]);
     }
 
 	public function singleMedia($type = null)
     {
         return $this->morphOne(Media::class, 'mediable')
-                    ->when($type, function ($query) use ($type) {
-                        $query->where('type', $type);
-                    })
-                    ->select([
-                        'id',
-                        'mediable_type',
-                        'mediable_id',
-                        'type',
-                        'path',
-                        'title',
-                        'description',
-                        'size',
-                        'is_main',
-                    ]);
+            ->when($type, function ($query) use ($type) {
+                $query->ofType($type);
+            })->select([
+                'id',
+                'mediable_type',
+                'mediable_id',
+                'type',
+                'path',
+                'title',
+                'description',
+                'size',
+                'is_main',
+            ]);
     }
 
     ## Getters & Setters

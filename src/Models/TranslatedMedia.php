@@ -4,23 +4,26 @@ namespace Mabrouk\Mediable\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
-use Mabrouk\Mediable\Factories\MediaFactory;
 use Mabrouk\Mediable\Traits\MediaModelsTrait;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Mabrouk\Translatable\Traits\Translatable;
+use Mabrouk\Mediable\Factories\TranslatedMediaFactory;
 
-class Media extends Model
+class TranslatedMedia extends Model
 {
-    use HasFactory, MediaModelsTrait;
+    use MediaModelsTrait, Translatable;
 
-    protected $table = 'media';
+    protected $table = 'translated_media';
+
+    public $translatedAttributes = [
+        'title',        // nullable
+        'description',  // nullable
+    ];
 
     protected $fillable = [
         'path',
         'type',         // photo, video, file, voice or url
-        // 'media_group_name', // non translated. just used to separate the multiple media groups programatically // ! will add later
+        'media_group_name', // non translated. just used to separate the multiple media groups programatically
         'size',         // file size in kb
-        'title',        // nullable
-        'description',  // nullable
         'priority',     // default 0
         'is_main',
     ];
@@ -35,15 +38,11 @@ class Media extends Model
 
     ## Query Scope Methods
 
-    public function scopeByTitle($query, string $title = '')
+    public function scopeByTitle($query1, string $title = '')
     {
-        return $title == '' ? $query : $query->where('title', $title);
-    }
-
-    public function scopeOfGroup($query, $group = '')
-    {
-        // return $group != '' ? $query->where('media_group_name', $group) : $query;
-        return $query; // ! wip: till we add the full functionality
+        return $title == '' ? $query1 : $query1->whereHas('translations', function ($query2) use ($title) {
+            $query2->where('title', $title);
+        });
     }
 
     ## Other Methods
@@ -55,13 +54,14 @@ class Media extends Model
      */
     protected static function newFactory()
     {
-        return MediaFactory::new();
+        return TranslatedMediaFactory::new();
     }
 
     public function remove($removeFileWithoutObject = false)
     {
         Storage::delete($this->storagePath);
         if ($removeFileWithoutObject) return $this;
+        $this->deleteTranslations();
         $this->delete();
         return $this;
     }

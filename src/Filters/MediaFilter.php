@@ -13,7 +13,7 @@ class MediaFilter extends QueryFilter
 
     public function title($title = '')
     {
-        return $title != '' ? $this->builder->withTitle($title) : $this->builder;
+        return $title != '' ? $this->builder->byTitle($title) : $this->builder;
     }
 
     public function main($main = 'yes')

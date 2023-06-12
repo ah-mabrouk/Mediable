@@ -37,6 +37,10 @@ class MediableServiceProvider extends ServiceProvider
             switch (true) {
                 case ! class_exists('CreateMediaTable') :
                     $migrationFiles[__DIR__ . '/database/migrations/create_media_table.php.stub'] = database_path('migrations/' . date('Y_m_d_His', time()) . '_create_media_table.php');
+                case ! class_exists('CreateTranslatedMediaTable') :
+                    $migrationFiles[__DIR__ . '/database/migrations/create_translated_media_table.php.stub'] = database_path('migrations/' . date('Y_m_d_His', time()) . '_create_translated_media_table.php');
+                case ! class_exists('CreateTranslatedMediaTranslationsTable') :
+                    $migrationFiles[__DIR__ . '/database/migrations/create_translated_media_translations_table.php.stub'] = database_path('migrations/' . date('Y_m_d_His', time()) . '_create_translated_media_translations.php');
             }
 
             if (\count($migrationFiles) > 0) {
