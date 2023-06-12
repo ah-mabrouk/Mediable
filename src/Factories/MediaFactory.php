@@ -25,7 +25,7 @@ class MediaFactory extends Factory
     public function definition()
     {
         return [
-            'path',
+            'path' => 'https://via.placeholder.com/1024x300?text=media_file',
             'type' => $this->faker->randomElement(['photo', 'file', 'video']),
             'size' => $this->faker->numberBetween(50, 2048),
             'title' => $this->faker->sentence(5),
