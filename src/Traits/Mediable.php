@@ -2,6 +2,7 @@
 
 namespace Mabrouk\Mediable\Traits;
 
+use Carbon\Carbon;
 use ReflectionClass;
 use Illuminate\Support\Str;
 use Mabrouk\Mediable\Models\Media;
@@ -29,6 +30,8 @@ Trait Mediable
                 'priority',
                 'size',
                 'is_main',
+                'created_at',
+                'updated_at',
             ]);
     }
 
@@ -47,6 +50,8 @@ Trait Mediable
                 'description',
                 'size',
                 'is_main',
+                'created_at',
+                'updated_at',
             ]);
     }
 
@@ -155,6 +160,8 @@ Trait Mediable
             'is_main' => $isMain ? true : false,
             'priority' => $priority,
             'size' => $fileSize,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
         $this->touch;
         return $this;
@@ -173,6 +180,7 @@ Trait Mediable
             'is_main' => $isMain,
             'priority' => $priority != $singleMedia->priority && $priority != 9999 ? $priority : $singleMedia->priority,
             'size' => $fileSize,
+            'updated_at' => Carbon::now(),
         ]);
 
         $this->touch;

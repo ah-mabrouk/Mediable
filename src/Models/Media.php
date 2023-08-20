@@ -23,6 +23,9 @@ class Media extends Model
         'description',  // nullable
         'priority',     // default 0
         'is_main',
+
+        'created_at',
+        'updated_at',
     ];
 
     protected $casts = [

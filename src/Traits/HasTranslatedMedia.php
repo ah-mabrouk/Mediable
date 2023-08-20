@@ -2,6 +2,7 @@
 
 namespace Mabrouk\Mediable\Traits;
 
+use Carbon\Carbon;
 use Mabrouk\Mediable\Traits\Mediable;
 use Mabrouk\Mediable\Models\TranslatedMedia;
 
@@ -33,6 +34,8 @@ Trait HasTranslatedMedia
                 'priority',
                 'size',
                 'is_main',
+                'created_at',
+                'updated_at',
             ]);
     }
 
@@ -50,6 +53,8 @@ Trait HasTranslatedMedia
                 'media_group_name',
                 'size',
                 'is_main',
+                'created_at',
+                'updated_at',
             ]);
     }
 
@@ -70,6 +75,8 @@ Trait HasTranslatedMedia
             'media_group_name' => $mediaGroupName,
             'priority' => $priority,
             'size' => $fileSize,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
         request()->dontTranslate = true;
         $media->translate([
@@ -96,6 +103,7 @@ Trait HasTranslatedMedia
             'media_group_name' => $mediaGroupName ?? $singleMedia->media_group_name,
             'priority' => $priority != $singleMedia->priority ? $priority : $singleMedia->priority,
             'size' => $fileSize,
+            'updated_at' => Carbon::now(),
         ]);
 
         $this->touch;
