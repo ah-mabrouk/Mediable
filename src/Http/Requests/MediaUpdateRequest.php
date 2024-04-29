@@ -9,6 +9,10 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class MediaUpdateRequest extends FormRequest
 {
+    public $model;
+    public $medium;
+    public $type;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -38,7 +42,7 @@ class MediaUpdateRequest extends FormRequest
                 $rules['file'] = 'required|mimes:png,jpeg|max:2048';
                 break;
             case 'file' :
-                $rules['file'] = 'required|mimes:pdf|max:2048';
+                $rules['file'] = 'required|mimes:pdf,doc,docx|max:2048';
                 break;
             case 'video' :
                 $rules['file'] = 'required|active_url';
@@ -65,7 +69,8 @@ class MediaUpdateRequest extends FormRequest
                         config($configPath) . $this->model->$mediaDirectory,
                         $fileName . '-' . random_int(1, 9999999) . '.' . $this->file->getClientOriginalExtension()
                     ),
-                    fileSize: $this->file('file')->getSize() / 1024
+                    fileSize: $this->file('file')->getSize() / 1024,
+                    extension: $this->file->getClientOriginalExtension()
                 );
                 break;
         }

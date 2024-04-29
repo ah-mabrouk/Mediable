@@ -24,6 +24,7 @@ Trait Mediable
                 'mediable_type',
                 'mediable_id',
                 'type',
+                'extension',
                 'path',
                 'title',
                 'description',
@@ -45,6 +46,7 @@ Trait Mediable
                 'mediable_type',
                 'mediable_id',
                 'type',
+                'extension',
                 'path',
                 'title',
                 'description',
@@ -148,13 +150,22 @@ Trait Mediable
 
     ## Other Methods
 
-    public function addMedia(string $type, string $path, string $title = null, string $description = null, bool $isMain = false, int $priority = 9999, int $fileSize = null)
-    {
+    public function addMedia(
+        string $type,
+        string $path,
+        string $title = null,
+        string $description = null,
+        bool $isMain = false,
+        int $priority = 9999,
+        int $fileSize = null,
+        string $extension = ''
+    ) {
         ! $isMain ? : $this->normalizePreviousMainMedia();
 
         $this->media()->create([
             'path' => $path,
             'type' => $type,
+            'extension' => $extension,
             'title' => $title,
             'description' => $description,
             'is_main' => $isMain ? true : false,
@@ -167,14 +178,23 @@ Trait Mediable
         return $this;
     }
 
-    public function editMedia(Media $singleMedia, string $path = null, string $title = null, string $description = null, bool $isMain = false, int $priority = 9999, int $fileSize = null)
-    {
+    public function editMedia(
+        Media $singleMedia,
+        string $path = null,
+        string $title = null,
+        string $description = null,
+        bool $isMain = false,
+        int $priority = 9999,
+        int $fileSize = null,
+        string $extension = ''
+    ) {
         $oldPath = $path == null ?: $singleMedia->path;
         $singleMedia->is_main || (!$singleMedia->is_main && !$isMain) ? : $this->normalizePreviousMainMedia();
 
         ! $oldPath ?: $singleMedia->remove(true);
         $singleMedia->update([
             'path' => $path ?? $singleMedia->path,
+            'extension' => $extension ?? $singleMedia->extension,
             'title' => $title ?? $singleMedia->title,
             'description' => $description ?? $singleMedia->description,
             'is_main' => $isMain,
@@ -186,9 +206,16 @@ Trait Mediable
         $this->touch;
     }
 
-    public function replaceMedia(Media $singleMedia, string $path, string $title = null, string $description = null, bool $isMain = false, int $fileSize = null)
-    {
-        $this->editMedia($singleMedia, $path, $title, $description, $isMain, $fileSize);
+    public function replaceMedia(
+        Media $singleMedia,
+        string $path,
+        string $title = null,
+        string $description = null,
+        bool $isMain = false,
+        int $fileSize = null,
+        string $extension = ''
+    ) {
+        $this->editMedia($singleMedia, $path, $title, $description, $isMain, $fileSize, $extension);
         $this->touch;
     }
 

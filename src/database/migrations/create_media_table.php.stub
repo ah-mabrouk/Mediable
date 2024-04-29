@@ -18,6 +18,7 @@ class CreateMediaTable extends Migration
             $table->morphs('mediable');
 
             $table->string('type')->index(); // photo, video, file, voice or url
+            $table->string('extension')->nullable();
             $table->text('path');
             // $table->string('media_group_name')->index()->nullable(); // ! will add later
             $table->string('title')->nullable();
