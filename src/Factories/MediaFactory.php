@@ -29,6 +29,7 @@ class MediaFactory extends Factory
             'type' => $this->faker->randomElement(['photo', 'file', 'video', 'voice', 'url']),
             // 'media_group_name' => null, // ! will add later
             'size' => $this->faker->numberBetween(50, 2048),
+            'extension' => '',
             'title' => $this->faker->sentence(5),
             'description' => $this->faker->paragraph(2),
             'priority' => $this->faker->numberBetween(1, 9999),

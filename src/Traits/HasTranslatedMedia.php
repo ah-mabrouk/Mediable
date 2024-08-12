@@ -71,7 +71,7 @@ Trait HasTranslatedMedia
 
     ## Other Methods
 
-    public function addMedia(string $type, string $path, string $title = null, string $description = null, bool $isMain = false, string $extention = '', string $mediaGroupName = '', int $priority = 9999, int $fileSize = null)
+    public function addMedia(string $type, string $path, string $title = null, string $description = null, bool $isMain = false, string $extension = '', string $mediaGroupName = '', int $priority = 9999, int $fileSize = null)
     {
         ! $isMain ? : $this->normalizePreviousMainMedia();
 
@@ -79,7 +79,7 @@ Trait HasTranslatedMedia
             'path' => $path,
             'type' => $type,
             'is_main' => $isMain ? true : false,
-            'extention' => $extention,
+            'extension' => $extension,
             // 'media_group_name' => $mediaGroupName,
             'priority' => $priority,
             'size' => $fileSize,
@@ -97,7 +97,7 @@ Trait HasTranslatedMedia
     }
 
     // ! should handle translation here
-    public function editMedia(TranslatedMedia $singleMedia, string $path = null, string $title = null, string $description = null, bool $isMain = false, string $extention = '', string $mediaGroupName = '', int $priority = 9999, int $fileSize = null)
+    public function editMedia(TranslatedMedia $singleMedia, string $path = null, string $title = null, string $description = null, bool $isMain = false, string $extension = '', string $mediaGroupName = '', int $priority = 9999, int $fileSize = null)
     {
         $oldPath = $path == null ?: $singleMedia->path;
         $singleMedia->is_main || (!$singleMedia->is_main && !$isMain) ? : $this->normalizePreviousMainMedia();
@@ -108,7 +108,7 @@ Trait HasTranslatedMedia
             'title' => $title ?? $singleMedia->title,
             'description' => $description ?? $singleMedia->description,
             'is_main' => $isMain,
-            'extention' => $extention,
+            'extension' => $extension,
             // 'media_group_name' => $mediaGroupName ?? $singleMedia->media_group_name,
             'priority' => $priority != $singleMedia->priority ? $priority : $singleMedia->priority,
             'size' => $fileSize,

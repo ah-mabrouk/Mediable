@@ -27,6 +27,7 @@ class TranslatedMediaFactory extends Factory
         return [
             'path' => 'https://via.placeholder.com/1024x300?text=media_file',
             'type' => $this->faker->randomElement(['photo', 'file', 'video', 'voice', 'url']),
+            'extension' => '',
             'media_group_name' => null,
             'size' => $this->faker->numberBetween(50, 2048),
             'priority' => $this->faker->numberBetween(1, 9999),

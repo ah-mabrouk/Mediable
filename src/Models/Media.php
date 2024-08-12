@@ -17,7 +17,7 @@ class Media extends Model
     protected $fillable = [
         'path',
         'type',         // photo, video, file, voice or url
-        'extension',         // photo, video, file, voice or url
+        'extension',
         // 'media_group_name', // non translated. just used to separate the multiple media groups programatically // ! will add later
         'size',         // file size in kb
         'title',        // nullable

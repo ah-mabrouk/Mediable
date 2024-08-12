@@ -22,6 +22,7 @@ class TranslatedMedia extends Model
     protected $fillable = [
         'path',
         'type',         // photo, video, file, voice or url
+        'extension',
         'media_group_name', // non translated. just used to separate the multiple media groups programatically
         'size',         // file size in kb
         'priority',     // default 0
