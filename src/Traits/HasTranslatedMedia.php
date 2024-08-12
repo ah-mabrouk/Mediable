@@ -29,8 +29,11 @@ Trait HasTranslatedMedia
                 'mediable_type',
                 'mediable_id',
                 'type',
+                'extension',
                 'path',
-                'media_group_name',
+                // 'media_group_name',
+                'title',
+                'description',
                 'priority',
                 'size',
                 'is_main',
@@ -49,8 +52,12 @@ Trait HasTranslatedMedia
                 'mediable_type',
                 'mediable_id',
                 'type',
+                'extension',
                 'path',
-                'media_group_name',
+                // 'media_group_name',
+                'title',
+                'description',
+                'priority',
                 'size',
                 'is_main',
                 'created_at',
@@ -64,7 +71,7 @@ Trait HasTranslatedMedia
 
     ## Other Methods
 
-    public function addMedia(string $type, string $path, string $title = null, string $description = null, bool $isMain = false, string $mediaGroupName = '', int $priority = 9999, int $fileSize = null)
+    public function addMedia(string $type, string $path, string $title = null, string $description = null, bool $isMain = false, string $extention = '', string $mediaGroupName = '', int $priority = 9999, int $fileSize = null)
     {
         ! $isMain ? : $this->normalizePreviousMainMedia();
 
@@ -72,7 +79,8 @@ Trait HasTranslatedMedia
             'path' => $path,
             'type' => $type,
             'is_main' => $isMain ? true : false,
-            'media_group_name' => $mediaGroupName,
+            'extention' => $extention,
+            // 'media_group_name' => $mediaGroupName,
             'priority' => $priority,
             'size' => $fileSize,
             'created_at' => Carbon::now(),
@@ -89,7 +97,7 @@ Trait HasTranslatedMedia
     }
 
     // ! should handle translation here
-    public function editMedia(TranslatedMedia $singleMedia, string $path = null, string $title = null, string $description = null, bool $isMain = false, string $mediaGroupName = '', int $priority = 9999, int $fileSize = null)
+    public function editMedia(TranslatedMedia $singleMedia, string $path = null, string $title = null, string $description = null, bool $isMain = false, string $extention = '', string $mediaGroupName = '', int $priority = 9999, int $fileSize = null)
     {
         $oldPath = $path == null ?: $singleMedia->path;
         $singleMedia->is_main || (!$singleMedia->is_main && !$isMain) ? : $this->normalizePreviousMainMedia();
@@ -97,10 +105,11 @@ Trait HasTranslatedMedia
         ! $oldPath ?: $singleMedia->remove(true);
         $singleMedia->update([
             'path' => $path ?? $singleMedia->path,
-            // 'title' => $title ?? $singleMedia->title,
-            // 'description' => $description ?? $singleMedia->description,
+            'title' => $title ?? $singleMedia->title,
+            'description' => $description ?? $singleMedia->description,
             'is_main' => $isMain,
-            'media_group_name' => $mediaGroupName ?? $singleMedia->media_group_name,
+            'extention' => $extention,
+            // 'media_group_name' => $mediaGroupName ?? $singleMedia->media_group_name,
             'priority' => $priority != $singleMedia->priority ? $priority : $singleMedia->priority,
             'size' => $fileSize,
             'updated_at' => Carbon::now(),
@@ -109,9 +118,9 @@ Trait HasTranslatedMedia
         $this->touch;
     }
 
-    public function replaceMedia(TranslatedMedia $singleMedia, string $path, string $title = null, string $description = null, bool $isMain = false, int $fileSize = null)
-    {
-        $this->editMedia($singleMedia, $path, $title, $description, $isMain, $fileSize);
-        $this->touch;
-    }
+    // public function replaceMedia(TranslatedMedia $singleMedia, string $path, string $title = null, string $description = null, bool $isMain = false, string $mediaGroupName = '', int $priority = 9999, int $fileSize = null)
+    // {
+    //     $this->editMedia(singleMedia: $singleMedia, path: $path, title: $title, description: $description, isMain: $isMain, mediaGroupName: $mediaGroupName,  priority: $priority, fileSize: $fileSize);
+    //     $this->touch;
+    // }
 }
