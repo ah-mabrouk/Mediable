@@ -4,6 +4,7 @@ namespace Mabrouk\Mediable;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Mabrouk\Mediable\Console\Commands\MediablePublishRoutesCommand;
 
 class MediableServiceProvider extends ServiceProvider
 {
@@ -27,6 +28,10 @@ class MediableServiceProvider extends ServiceProvider
         require_once __DIR__ . '/Helpers/MediableHelperFunctions.php';
 
         $this->registerRoutes();
+
+        $this->commands([
+            MediablePublishRoutesCommand::class,
+        ]);
 
         if ($this->app->runningInConsole()) {
             /**
@@ -58,9 +63,11 @@ class MediableServiceProvider extends ServiceProvider
 
     protected function registerRoutes()
     {
-        Route::group($this->routeConfiguration(), function () {
-            $this->loadRoutesFrom(__DIR__ . '/routes/mediable_routes.php');
-        });
+        if (config('mediable.load_routes')) {
+            Route::group($this->routeConfiguration(), function () {
+                $this->loadRoutesFrom(__DIR__ . '/routes/mediable_routes.php');
+            });
+        }
     }
 
     protected function routeConfiguration()

@@ -34,4 +34,28 @@ return [
     'protected_internal_media_base_paths' => [
         // '' => [],
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Routes publish subdirectory
+    |--------------------------------------------------------------------------
+    |
+    | Here you may specify the subdirectory where the package routes should be
+    | published inside the project's routes folder. This allows you to customize the location of the published
+    | routes files.
+    |
+    */
+    # eg: 'routes_publish_subdirectory' => 'custom/',
+    'routes_publish_subdirectory' => '',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Load Routes
+    |--------------------------------------------------------------------------
+    |
+    | This option controls whether the package routes should be loaded.
+    | Set this value to true to load the routes, or false to disable them.
+    |
+    */
+    'load_routes' => true,
 ];
