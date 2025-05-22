@@ -12,8 +12,8 @@
     "minimum-stability": "stable",
     "require": {
         "laravel/framework": ">=8.0",
-        "mabrouk/translatable": "^1.0",
-        "mabrouk/filterable": "^1.0"
+        "mabrouk/translatable": ">=1.0",
+        "mabrouk/filterable": ">=1.0"
     },
     "require-dev": {
         "orchestra/testbench": "^7.0@dev"
