@@ -26,6 +26,8 @@ class MediaResource extends JsonResource
             'main' => $this->is_main,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+
+            'media_meta' => new MediaMetaResource($this->mediaMeta)
         ];
     }
 }
