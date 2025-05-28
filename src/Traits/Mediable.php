@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use ReflectionClass;
 use Illuminate\Support\Str;
 use Mabrouk\Mediable\Models\Media;
+use Mabrouk\Mediable\Models\MediaMeta;
 
 Trait Mediable
 {
@@ -240,5 +241,10 @@ Trait Mediable
             ]);
         }
         return;
+    }
+
+    public function updateOrCreateMediaMeta(Media $media)
+    {
+        MediaMeta::updateOrCreate(['media_id' => $media->id]);
     }
 }

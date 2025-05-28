@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Mabrouk\Mediable\Factories\MediaFactory;
 use Mabrouk\Mediable\Traits\MediaModelsTrait;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Media extends Model
@@ -34,6 +35,11 @@ class Media extends Model
     ];
 
     ## Relations
+
+    public function mediaMeta(): HasOne
+    {
+        return $this->hasOne(MediaMeta::class);
+    }
 
     ## Getters & Setters
 
@@ -66,7 +72,8 @@ class Media extends Model
     {
         Storage::delete($this->storagePath);
         if ($removeFileWithoutObject) return $this;
-        $this->delete();
-        return $this;
+        $this->mediaMeta->delete();
+
+        return $this->delete();
     }
 }

@@ -7,6 +7,12 @@ use Illuminate\Support\ServiceProvider;
 
 class MediableServiceProvider extends ServiceProvider
 {
+    private $packageMigrations = [
+        'create_media_table',
+        'create_media_meta_table',
+        'create_media_meta_translations_table',
+    ];
+
     /**
      * Register services.
      *
@@ -30,19 +36,9 @@ class MediableServiceProvider extends ServiceProvider
 
         if ($this->app->runningInConsole()) {
             /**
-             * Mediable Migrations
+             * Migrations
              */
-            $migrationFiles = [];
-
-            switch (true) {
-                case ! class_exists('CreateMediaTable') :
-                    $migrationFiles[__DIR__ . '/database/migrations/create_media_table.php.stub'] = database_path('migrations/' . date('Y_m_d_His', time()) . '_create_media_table.php');
-                case ! class_exists('CreateTranslatedMediaTable') :
-                    $migrationFiles[__DIR__ . '/database/migrations/create_translated_media_table.php.stub'] = database_path('migrations/' . date('Y_m_d_His', time()) . '_create_translated_media_table.php');
-                case ! class_exists('CreateTranslatedMediaTranslationsTable') :
-                    $migrationFiles[__DIR__ . '/database/migrations/create_translated_media_translations_table.php.stub'] = database_path('migrations/' . date('Y_m_d_His', time()) . '_create_translated_media_translations.php');
-            }
-
+            $migrationFiles = $this->migrationFiles();
             if (\count($migrationFiles) > 0) {
                 $this->publishes($migrationFiles, 'mediable-migrations');
             }
@@ -71,4 +67,28 @@ class MediableServiceProvider extends ServiceProvider
             'middleware' => config('mediable.middleware'),
         ];
     }
+
+    protected function migrationFiles()
+    {
+        $migrationFiles = [];
+
+        foreach ($this->packageMigrations as $migrationName) {
+            if (! $this->migrationExists($migrationName)) {
+                $migrationFiles[__DIR__ . "/database/migrations/{$migrationName}.php.stub"] = database_path('migrations/' . date('Y_m_d_His', time()) . "_{$migrationName}.php");
+            }
+        }
+        return $migrationFiles;
+    }
+
+    protected function migrationExists($migrationName)
+    {
+        $path = database_path('migrations/');
+        $files = \scandir($path);
+        $pos = false;
+        foreach ($files as &$value) {
+            $pos = \strpos($value, $migrationName);
+            if ($pos !== false) return true;
+        }
+        return false;
+    }    
 }
