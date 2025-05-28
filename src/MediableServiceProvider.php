@@ -40,7 +40,7 @@ class MediableServiceProvider extends ServiceProvider
              */
             $migrationFiles = $this->migrationFiles();
             if (\count($migrationFiles) > 0) {
-                $this->publishes($migrationFiles, 'media_migrations');
+                $this->publishes($migrationFiles, 'mediable-migrations');
             }
 
             /**
