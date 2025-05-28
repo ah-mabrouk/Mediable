@@ -72,7 +72,8 @@ class Media extends Model
     {
         Storage::delete($this->storagePath);
         if ($removeFileWithoutObject) return $this;
-        $this->delete();
-        return $this;
+        $this->mediaMeta->delete();
+
+        return $this->delete();
     }
 }

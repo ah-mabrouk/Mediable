@@ -43,7 +43,7 @@ class MediaMeta extends Model
      */
     protected static function newFactory(): Factory
     {
-        return \Mabrouk\Mediable\Database\Factories\MediaMetaFactory::new();
+        return \Mabrouk\Mediable\Factories\MediaMetaFactory::new();
     }
 
     public function remove(): bool
